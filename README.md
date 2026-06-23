@@ -69,7 +69,9 @@ Colab: open the notebook, upload `data/r_nba_labeled.csv`, set `GROQ_API_KEY` in
 
 ## Demo video
 
-See **`demo_notes.txt`** for a full ~3-minute script.
+**[Watch demo on Google Drive](https://drive.google.com/file/d/1eL2u_rMc2IyTLbaFcl9Xtjt6Z1n2Va2K/view?usp=share_link)**
+
+See **`demo_notes.txt`** for the ~3-minute script.
 
 ## AI tool usage
 
@@ -83,4 +85,4 @@ See **`demo_notes.txt`** for a full ~3-minute script.
 - [x] `evaluation_results.json`
 - [x] `confusion_matrix.png`
 - [x] `README.md`
-- [ ] Demo video link (add URL here when recorded)
+- [x] [Demo video](https://drive.google.com/file/d/1eL2u_rMc2IyTLbaFcl9Xtjt6Z1n2Va2K/view?usp=share_link)
