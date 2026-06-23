@@ -1,0 +1,109 @@
+Demo Notes — TakeMeter (AI201 Project 3)
+Target length: 2–3 minutes
+
+WHAT TO HAVE ON SCREEN
+- This repo open (README.md or planning.md)
+- confusion_matrix.png
+- evaluation_results.json
+- Optional: one example post from data/r_nba_labeled.csv
+
+────────────────────────────────────────
+1. INTRO (~20 sec)
+────────────────────────────────────────
+
+Say:
+"Hi, I'm Quonlee Howery. This is TakeMeter, my AI201 Project 3 for CodePath.
+
+I built a text classifier for r/nba — Reddit's main NBA community. The goal is to tell apart four types of posts: analysis, hot takes, news updates, and meta or community content.
+
+The idea is that during playoffs or trade deadline, a feed could boost real analysis and deprioritize low-effort hot takes."
+
+Show: README.md title or planning.md Section 1–2 (community + labels).
+
+────────────────────────────────────────
+2. LABELS (~30 sec)
+────────────────────────────────────────
+
+Say:
+"I defined four labels based on what the community already cares about:
+
+- analysis — posts backed by stats, film, or structured reasoning
+- hot_take — bold opinions without real evidence
+- news_updates — injury reports, highlights, trade news
+- meta_community — fandom, media, or subreddit stuff like SERIOUS threads
+
+The tricky boundary is hot take versus analysis — one stat used to support an extreme claim is still a hot take, which I documented in planning.md."
+
+Show: planning.md label table or README label list.
+
+────────────────────────────────────────
+3. DATA (~20 sec)
+────────────────────────────────────────
+
+Say:
+"I collected 300 public r/nba posts using the PullPush API, labeled them manually with help from a rule-based script I reviewed, and split 70-15-15 for train, validation, and test. The test set is 45 posts that neither model saw during training."
+
+Show: data/r_nba_labeled.csv (scroll briefly — don't read rows aloud).
+
+────────────────────────────────────────
+4. BASELINE (~25 sec)
+────────────────────────────────────────
+
+Say:
+"For Milestone 4 I ran a zero-shot Groq baseline using llama-3.3-70b-versatile with a prompt built from my label definitions.
+
+It got 73.3% accuracy on the test set. It was good at news and meta posts, but struggled on hot takes — only 22% recall. It often confused opinion posts with analysis or community content."
+
+Show: baseline_evaluation.json or README results table.
+
+────────────────────────────────────────
+5. FINE-TUNING (~35 sec)
+────────────────────────────────────────
+
+Say:
+"For Milestone 5 I fine-tuned DistilBERT on 210 training examples.
+
+My first run actually did worse than the baseline — 71.1% — because the model never predicted hot_take at all. It collapsed to mostly news.
+
+I fixed that by retraining with class-weighted loss and five epochs instead of three. That brought test accuracy to 82.2% — an improvement of about 9 points over the baseline, which beats my target of plus 8."
+
+Show: evaluation_results.json — point to finetuned_accuracy and improvement.
+
+────────────────────────────────────────
+6. CONFUSION MATRIX (~25 sec)
+────────────────────────────────────────
+
+Say:
+"Here's the confusion matrix on the test set. News and meta are strong. The main errors are still between analysis and hot_take — for example when a post lists series stats but the real point is a sweeping take like 'SGA was better than Jokic this series.'
+
+That matches the edge case I planned for in Section 3 of planning.md."
+
+Show: confusion_matrix.png — trace one off-diagonal cell with your cursor.
+
+────────────────────────────────────────
+7. EXAMPLE ERROR (~20 sec, optional)
+────────────────────────────────────────
+
+Say (pick one that fits your matrix):
+"One post the model got wrong was an analysis-style stat breakdown that the model labeled as hot_take — or vice versa. That's exactly the boundary my planning doc calls out: stats present, but the main move is still unsupported opinion."
+
+Show: a short post from the test set if you have one; otherwise skip.
+
+────────────────────────────────────────
+8. CLOSING (~15 sec)
+────────────────────────────────────────
+
+Say:
+"TakeMeter met my success criteria: beat the baseline, hit F1 above 0.6 on every class, and no single label dominated predictions.
+
+Thanks for watching."
+
+Show: README submission checklist with demo video box ready to fill in.
+
+────────────────────────────────────────
+RECORDING TIPS
+────────────────────────────────────────
+- Use QuickTime → New Screen Recording, or Zoom → Record to Cloud
+- Speak slowly; 2–3 minutes is enough
+- You do NOT need to run training live — showing saved results is fine
+- Upload to YouTube (unlisted) or Google Drive and paste the link in README

@@ -1,0 +1,22 @@
+# API keys — never commit these
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Training artifacts (large — regenerate with run_milestone5_finetune.py)
+takemeter-model/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store

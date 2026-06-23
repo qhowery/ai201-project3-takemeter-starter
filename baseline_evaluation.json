@@ -1,0 +1,91 @@
+{
+  "milestone": 4,
+  "model": "llama-3.3-70b-versatile",
+  "baseline_accuracy": 0.7333,
+  "test_set_size": 45,
+  "parseable_count": 45,
+  "unparseable_count": 0,
+  "unparseable_rate": 0.0,
+  "label_map": {
+    "analysis": 0,
+    "hot_take": 1,
+    "news_updates": 2,
+    "meta_community": 3
+  },
+  "classification_report": {
+    "analysis": {
+      "precision": 0.6428571428571429,
+      "recall": 0.75,
+      "f1-score": 0.6923076923076923,
+      "support": 12.0
+    },
+    "hot_take": {
+      "precision": 0.6666666666666666,
+      "recall": 0.2222222222222222,
+      "f1-score": 0.3333333333333333,
+      "support": 9.0
+    },
+    "news_updates": {
+      "precision": 0.8571428571428571,
+      "recall": 0.8571428571428571,
+      "f1-score": 0.8571428571428571,
+      "support": 14.0
+    },
+    "meta_community": {
+      "precision": 0.7142857142857143,
+      "recall": 1.0,
+      "f1-score": 0.8333333333333334,
+      "support": 10.0
+    },
+    "accuracy": 0.7333333333333333,
+    "macro avg": {
+      "precision": 0.7202380952380952,
+      "recall": 0.7073412698412698,
+      "f1-score": 0.6790293040293041,
+      "support": 45.0
+    },
+    "weighted avg": {
+      "precision": 0.7301587301587302,
+      "recall": 0.7333333333333333,
+      "f1-score": 0.7031339031339031,
+      "support": 45.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      9,
+      1,
+      2,
+      0
+    ],
+    [
+      4,
+      2,
+      0,
+      3
+    ],
+    [
+      1,
+      0,
+      12,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      10
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "analysis",
+    "hot_take",
+    "news_updates",
+    "meta_community"
+  ],
+  "split": {
+    "train": 210,
+    "test": 45,
+    "random_state": 42
+  }
+}
