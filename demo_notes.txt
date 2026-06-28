@@ -1,11 +1,13 @@
 Demo Notes — TakeMeter (AI201 Project 3)
 Target length: 2–3 minutes
 
-WHAT TO HAVE ON SCREEN
-- This repo open (README.md or planning.md)
-- confusion_matrix.png
-- evaluation_results.json
-- Optional: one example post from data/r_nba_labeled.csv
+WHAT TO HAVE ON SCREEN (tab order)
+1. README.md or planning.md (intro + labels)
+2. data/r_nba_labeled.csv (data section — scroll only)
+3. baseline_evaluation.json (baseline section)
+4. evaluation_results.json (fine-tuning + closing)
+5. confusion_matrix.png (matrix + example error)
+6. Optional: planning.md Section 3 (edge cases) when discussing errors
 
 ────────────────────────────────────────
 1. INTRO (~20 sec)
@@ -18,7 +20,7 @@ I built a text classifier for r/nba — Reddit's main NBA community. The goal is
 
 The idea is that during playoffs or trade deadline, a feed could boost real analysis and deprioritize low-effort hot takes."
 
-Show: README.md title or planning.md Section 1–2 (community + labels).
+Show: README title or planning.md Sections 1–2.
 
 ────────────────────────────────────────
 2. LABELS (~30 sec)
@@ -32,16 +34,16 @@ Say:
 - news_updates — injury reports, highlights, trade news
 - meta_community — fandom, media, or subreddit stuff like SERIOUS threads
 
-The tricky boundary is hot take versus analysis — one stat used to support an extreme claim is still a hot take, which I documented in planning.md."
+The tricky boundary is hot take versus analysis. One stat used to support an extreme ranking is still a hot take — I documented that primary-move rule in planning.md Section 3."
 
-Show: planning.md label table or README label list.
+Show: planning.md label table (Section 2) or README label list.
 
 ────────────────────────────────────────
 3. DATA (~20 sec)
 ────────────────────────────────────────
 
 Say:
-"I collected 300 public r/nba posts using the PullPush API, labeled them manually with help from a rule-based script I reviewed, and split 70-15-15 for train, validation, and test. The test set is 45 posts that neither model saw during training."
+"I collected 300 public r/nba posts using the PullPush API, labeled them manually with help from a rule-based script I reviewed, and split 70-15-15 for train, validation, and test. The test set is 45 posts — 12 analysis, 9 hot takes, 14 news, 10 meta — that neither model saw during training."
 
 Show: data/r_nba_labeled.csv (scroll briefly — don't read rows aloud).
 
@@ -52,9 +54,9 @@ Show: data/r_nba_labeled.csv (scroll briefly — don't read rows aloud).
 Say:
 "For Milestone 4 I ran a zero-shot Groq baseline using llama-3.3-70b-versatile with a prompt built from my label definitions.
 
-It got 73.3% accuracy on the test set. It was good at news and meta posts, but struggled on hot takes — only 22% recall. It often confused opinion posts with analysis or community content."
+It got 73.3% accuracy on the test set — 45 out of 45 responses parseable. It was good at news and meta, but hot_take recall was only 22% — it missed most opinion posts and often lumped them into analysis or community."
 
-Show: baseline_evaluation.json or README results table.
+Show: baseline_evaluation.json — point to baseline_accuracy and hot_take recall in classification_report.
 
 ────────────────────────────────────────
 5. FINE-TUNING (~35 sec)
@@ -65,45 +67,52 @@ Say:
 
 My first run actually did worse than the baseline — 71.1% — because the model never predicted hot_take at all. It collapsed to mostly news.
 
-I fixed that by retraining with class-weighted loss and five epochs instead of three. That brought test accuracy to 82.2% — an improvement of about 9 points over the baseline, which beats my target of plus 8."
+I fixed that with class-weighted loss and five epochs instead of three. Test accuracy came up to 82.2% — about 9 points over baseline, beating my plus-8 target. Hot_take recall jumped to 89%, though analysis recall is still only 50% — that's the tradeoff."
 
-Show: evaluation_results.json — point to finetuned_accuracy and improvement.
+Show: evaluation_results.json — finetuned_accuracy, improvement, and hot_take vs analysis recall.
 
 ────────────────────────────────────────
 6. CONFUSION MATRIX (~25 sec)
 ────────────────────────────────────────
 
 Say:
-"Here's the confusion matrix on the test set. News and meta are strong. The main errors are still between analysis and hot_take — for example when a post lists series stats but the real point is a sweeping take like 'SGA was better than Jokic this series.'
+"Here's the confusion matrix — rows are true labels, columns are predictions.
 
-That matches the edge case I planned for in Section 3 of planning.md."
+News and meta are nearly perfect. The main error block is analysis misclassified as hot_take — four posts in that cell. That's the off-diagonal I planned for: stats present, but the post's main move is still a sweeping comparison, not step-by-step reasoning."
 
-Show: confusion_matrix.png — trace one off-diagonal cell with your cursor.
+Show: confusion_matrix.png
+Point at: row analysis → column hot_take (the cell with 4).
+Optional: also note analysis recall 6/12 in evaluation_results.json.
 
 ────────────────────────────────────────
-7. EXAMPLE ERROR (~20 sec, optional)
+7. EXAMPLE ERROR (~25 sec)
 ────────────────────────────────────────
 
-Say (pick one that fits your matrix):
-"One post the model got wrong was an analysis-style stat breakdown that the model labeled as hot_take — or vice versa. That's exactly the boundary my planning doc calls out: stats present, but the main move is still unsupported opinion."
+Say:
+"One test-set post in that bucket was labeled analysis but the model called hot_take:
 
-Show: a short post from the test set if you have one; otherwise skip.
+'SGA and Jdub finish the series with more assists individually and less turnovers combined than Jokic — SGA 46 assists and 14 turnovers, Jdub 42 and 10, Jokic 41 and 30.'
+
+It's a stat table supporting an implicit ranking — SGA was better than Jokic this series. I labeled it analysis because the numbers are structured, but the model read it as opinion-with-stats — exactly the boundary in planning.md."
+
+Show: evaluation_results.json or confusion_matrix.png while paraphrasing; optional scroll to that row in r_nba_labeled.csv if you want the full text on screen.
 
 ────────────────────────────────────────
 8. CLOSING (~15 sec)
 ────────────────────────────────────────
 
 Say:
-"TakeMeter met my success criteria: beat the baseline, hit F1 above 0.6 on every class, and no single label dominated predictions.
+"TakeMeter met my success criteria: beat the baseline by 8.9 points, every class hit F1 above 0.6 — analysis was the tightest at 0.63 — and no single label dominated predictions.
 
 Thanks for watching."
 
-Show: README submission checklist with demo video box ready to fill in.
+Show: README results table or submission checklist (demo link already filled in).
 
 ────────────────────────────────────────
 RECORDING TIPS
 ────────────────────────────────────────
-- Use QuickTime → New Screen Recording, or Zoom → Record to Cloud
+- QuickTime → New Screen Recording, or Zoom → Record to Cloud
 - Speak slowly; 2–3 minutes is enough
 - You do NOT need to run training live — showing saved results is fine
-- Upload to YouTube (unlisted) or Google Drive and paste the link in README
+- Pre-open tabs in order above so you're not hunting files on camera
+- If re-recording: update the Google Drive link in README

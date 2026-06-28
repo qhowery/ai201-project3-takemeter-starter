@@ -190,4 +190,4 @@ CSV label strings (must match notebook `LABEL_MAP` exactly):
 - [x] Milestone 3 — 200+ labeled rows in `r_nba_labeled.csv`, balanced, 3+ hard cases logged
 - [x] Milestone 4 — Baseline Groq metrics on test set (accuracy **0.733**, 45/45 parseable, see `baseline_evaluation.json`)
 - [x] Milestone 5 — Fine-tuned DistilBERT + comparison (accuracy **0.822**, +0.089 vs baseline, see `evaluation_results.json`)
-- [ ] Milestone 6 — README evaluation report + demo video (script in `demo_notes.txt`)
+- [x] Milestone 6 — README evaluation report + demo video (script in `demo_notes.txt`)
